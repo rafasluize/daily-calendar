@@ -43,7 +43,8 @@ export const EventsContainerStyled = styled.div`
 export const EventItemStyled = styled.div<{
   top: number;
   height: number;
-  width: number;
+  columns: number;
+  column: number;
 }>`
   width: calc(100% - 20px);
   background-color: #fff;
@@ -54,7 +55,11 @@ export const EventItemStyled = styled.div<{
   top: ${(props) => (props.top ? `${props.top}px` : 0)};
   height: ${(props) => (props.height ? `${props.height}px` : "10px")};
   padding: 10px;
-  width: ${(props) => (props.width ? `calc(100% / ${props.width})` : "100%")};
+  width: ${(props) =>
+    props.columns ? `calc(100% / ${props.columns})` : "100%"};
+  left: ${(props) =>
+    props.column === 1 ? "10px" : `calc(100% / ${props.columns})`};
+
   h4 {
     color: #b72c2a;
     font-size: 0.9rem;
