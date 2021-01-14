@@ -11,7 +11,7 @@ Calendário diário de eventos ![](https://lh3.googleusercontent.com/pw/ACtC-3dF
 - Redux
 - Styled Components
 
-A escolha das stack foi pela familiaridade e tbm pq baseado no desafio eles trabalham melhor juntos, diminuindo o esforço e as linhas de código.
+A escolha da stack foi pela familiaridade e tbm pq baseado no desafio eles trabalham melhor juntos, diminuindo o esforço e as linhas de código.
 
 ### Para rodar o projeto:
 

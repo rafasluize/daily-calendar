@@ -1,16 +1,11 @@
-import React, { ReactNode, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import Loading from "../../components/Loading";
-import { IEvents, IGroups, time, ITime } from "../../model/calendar";
-import { setDisplay } from "../../redux/ducks/loading";
-import { DFlexStyled } from "../../styles/global";
+import React, { ReactNode, useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import Loading from '../../components/Loading'
+import { IEvents, IGroups, time, ITime } from '../../model/calendar'
+import { setDisplay } from '../../redux/ducks/loading'
+import { DFlexStyled } from '../../styles/global'
 
-import {
-  ContainerStyled,
-  HoursStyled,
-  EventsContainerStyled,
-  EventItemStyled,
-} from "./styles";
+import { ContainerStyled, HoursStyled, EventsContainerStyled, EventItemStyled } from './styles'
 
 const Calendar: React.FC = () => {
   const initialList: IEvents[] = [
@@ -18,86 +13,86 @@ const Calendar: React.FC = () => {
     { start: 270, end: 430 },
     { start: 480, end: 540 },
     { start: 500, end: 570 },
-    { start: 550, end: 610 },
-  ];
-  const [listEvents, setListEvents] = useState<Array<IGroups>>();
-  const dispatch = useDispatch();
+    { start: 550, end: 610 }
+  ]
+  const [listEvents, setListEvents] = useState<Array<IGroups>>()
+  const dispatch = useDispatch()
 
   function between(current: IEvents, previous: IEvents): Boolean {
     return (
       (current.start <= previous.start && current.end >= previous.end) ||
       (current.start >= previous.start && current.start <= previous.end)
-    );
+    )
   }
 
   function layoutDaily() {
-    let groups: any[] = [];
-    let indexGroup: number = 0;
-    let maxColumn: number = 1;
-    let indexColumn = 1;
-    let indexEvent = 0;
+    let groups: any[] = []
+    let indexGroup: number = 0
+    let maxColumn: number = 1
+    let indexColumn = 1
+    let indexEvent = 0
     initialList.map((item, index, array) => {
       if (index !== 0) {
         //compara o item atual com o anterior
         if (between(item, array[index - 1])) {
-          indexEvent++;
+          indexEvent++
 
-          let previous: IGroups = groups[indexGroup];
-          let conflicItem: boolean = true;
+          let previous: IGroups = groups[indexGroup]
+          let conflicItem: boolean = true
           //Verifica se todos os items estão conflitando
           previous.items.forEach((itemPrevious) => {
             if (!between(item, itemPrevious)) {
-              conflicItem = false;
+              conflicItem = false
             }
-          });
+          })
           //Caso não conflite com todos irá para a linha de baixo
           //Senão adiciona mais 1 na coluna, indicando que ficará do lado
           if (conflicItem) {
-            indexColumn++;
-            maxColumn = indexColumn;
+            indexColumn++
+            maxColumn = indexColumn
           } else {
-            indexColumn = 1;
+            indexColumn = 1
           }
           const newItem = {
             columns: maxColumn,
             items: previous.items.concat({
               ...item,
               column: indexColumn,
-              index: indexEvent,
-            }),
-          };
-          groups[indexGroup] = newItem;
+              index: indexEvent
+            })
+          }
+          groups[indexGroup] = newItem
         } else {
-          indexEvent++;
+          indexEvent++
 
-          indexColumn = 1;
-          indexGroup++;
+          indexColumn = 1
+          indexGroup++
           const newItem = {
             columns: 1,
-            items: [{ ...item, column: 1, index: indexEvent }],
-          };
-          groups.push(newItem);
+            items: [{ ...item, column: 1, index: indexEvent }]
+          }
+          groups.push(newItem)
         }
       } else {
         //É o primeiro item, então adiciona na lista
-        indexEvent++;
+        indexEvent++
         const newItem = {
           columns: 1,
-          items: [{ ...item, column: 1, index: indexEvent }],
-        };
-        groups.push(newItem);
+          items: [{ ...item, column: 1, index: indexEvent }]
+        }
+        groups.push(newItem)
       }
 
-      return item;
-    });
-    console.log("groups", groups);
-    setListEvents(groups);
+      return item
+    })
+    console.log('groups', groups)
+    setListEvents(groups)
   }
 
   useEffect(() => {
-    dispatch(setDisplay(true));
-    layoutDaily();
-  }, []);
+    dispatch(setDisplay(true))
+    layoutDaily()
+  }, [])
   return listEvents && listEvents?.length > 0 ? (
     <ContainerStyled>
       <DFlexStyled justifyContent="center" alignItems="center">
@@ -106,7 +101,7 @@ const Calendar: React.FC = () => {
             (item: ITime, index: number): ReactNode => (
               <div key={index}>
                 {item.hour}
-                {item.period !== "" ? <span>{item.period}</span> : ""}
+                {item.period !== '' ? <span>{item.period}</span> : ''}
               </div>
             )
           )}
@@ -126,8 +121,8 @@ const Calendar: React.FC = () => {
                     >
                       <h4>Veículo #{item.index}</h4>
                       <p>
-                        "Neque porro quisquam est qui dolorem ipsum quia dolor
-                        sit amet, consectetur, adipisci velit..."
+                        "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,
+                        consectetur, adipisci velit..."
                       </p>
                     </EventItemStyled>
                   )
@@ -140,7 +135,7 @@ const Calendar: React.FC = () => {
     </ContainerStyled>
   ) : (
     <Loading />
-  );
-};
+  )
+}
 
-export default Calendar;
+export default Calendar

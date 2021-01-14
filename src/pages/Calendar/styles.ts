@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const ContainerStyled = styled.div`
   width: 100vw;
@@ -6,7 +6,7 @@ export const ContainerStyled = styled.div`
   display: flex;
   align-items: center;
   padding: 50px;
-`;
+`
 
 export const HoursStyled = styled.div`
   margin-right: 10px;
@@ -29,7 +29,7 @@ export const HoursStyled = styled.div`
       font-size: 0.7rem;
     }
   }
-`;
+`
 
 export const EventsContainerStyled = styled.div`
   background-color: #efefef;
@@ -38,14 +38,14 @@ export const EventsContainerStyled = styled.div`
   height: 720px;
   max-width: 100%;
   position: relative;
-`;
+`
 
 // crio a variavel de largura que é 100% do bloco dividido pela quantidade de colunas
 export const EventItemStyled = styled.div<{
-  top: number;
-  height: number;
-  columns: number;
-  column: number;
+  top: number
+  height: number
+  columns: number
+  column: number
 }>`
   background-color: #fff;
   border-left: 5px solid #b72c2a;
@@ -53,17 +53,14 @@ export const EventItemStyled = styled.div<{
   border-bottom-right-radius: 3px;
   position: absolute;
   top: ${(props) => (props.top ? `${props.top}px` : 0)};
-  height: ${(props) => (props.height ? `${props.height}px` : "10px")};
+  height: ${(props) => (props.height ? `${props.height}px` : '10px')};
   padding: 10px;
   --width: ${(props) => `calc(100% / ${props.columns})`};
   width: ${(props) =>
-    props.columns === 1
-      ? "calc(var(--width) - 20px)"
-      : `calc(var(--width) - 10px)`};
+    props.columns === 1 ? 'calc(var(--width) - 20px)' : `calc(var(--width) - 10px)`};
 
   --left: ${(props) => props.column - 1};
-  left: ${(props) =>
-    props.column === 1 ? "10px" : `calc(var(--width) * var(--left))`};
+  left: ${(props) => (props.column === 1 ? '10px' : `calc(var(--width) * var(--left))`)};
 
   h4 {
     color: #b72c2a;
@@ -73,4 +70,4 @@ export const EventItemStyled = styled.div<{
   p {
     font-size: 0.7rem;
   }
-`;
+`
