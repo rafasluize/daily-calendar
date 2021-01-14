@@ -5,7 +5,6 @@ export interface IEvents {
   index?: number
 }
 export interface IGroups {
-  key: number
   columns: number
   items: IEvents[]
 }

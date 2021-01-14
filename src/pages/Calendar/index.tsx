@@ -10,12 +10,15 @@ import { ContainerStyled, HoursStyled, EventsContainerStyled, EventItemStyled } 
 const Calendar: React.FC = () => {
   const initialList: IEvents[] = [
     { start: 30, end: 120 },
+    { start: 50, end: 150 },
+    { start: 70, end: 220 },
+    { start: 100, end: 280 },
     { start: 270, end: 430 },
     { start: 480, end: 540 },
     { start: 500, end: 570 },
     { start: 550, end: 610 }
   ]
-  const [listEvents, setListEvents] = useState<Array<IGroups>>()
+  const [listEvents, setListEvents] = useState<IGroups[]>()
   const dispatch = useDispatch()
 
   function between(current: IEvents, previous: IEvents): Boolean {
@@ -26,7 +29,7 @@ const Calendar: React.FC = () => {
   }
 
   function layoutDaily() {
-    let groups: any[] = []
+    let groups: IGroups[] = []
     let indexGroup: number = 0
     let maxColumn: number = 1
     let indexColumn = 1
@@ -120,10 +123,7 @@ const Calendar: React.FC = () => {
                       column={item.column ? item.column : 1}
                     >
                       <h4>Veículo #{item.index}</h4>
-                      <p>
-                        "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,
-                        consectetur, adipisci velit..."
-                      </p>
+                      <p>"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet..."</p>
                     </EventItemStyled>
                   )
                 )}
