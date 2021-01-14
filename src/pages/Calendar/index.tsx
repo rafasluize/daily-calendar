@@ -10,9 +10,6 @@ import { ContainerStyled, HoursStyled, EventsContainerStyled, EventItemStyled } 
 const Calendar: React.FC = () => {
   const initialList: IEvents[] = [
     { start: 30, end: 120 },
-    { start: 50, end: 150 },
-    { start: 70, end: 220 },
-    { start: 100, end: 280 },
     { start: 270, end: 430 },
     { start: 480, end: 540 },
     { start: 500, end: 570 },
