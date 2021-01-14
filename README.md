@@ -27,7 +27,7 @@ ou se preferir:
 
 ### Para gerar o build :
 
-#### `npm run buil`
+#### `npm run build`
 
 ou
 
