@@ -15,15 +15,10 @@ import {
 const Calendar: React.FC = () => {
   const initialList: IEvents[] = [
     { start: 30, end: 120 },
-    { start: 100, end: 200 },
     { start: 270, end: 430 },
     { start: 480, end: 540 },
     { start: 500, end: 570 },
-    { start: 510, end: 600 },
     { start: 550, end: 610 },
-    { start: 700, end: 800 },
-    { start: 750, end: 850 },
-    { start: 760, end: 900 },
   ];
   const [listEvents, setListEvents] = useState<Array<IGroups>>();
   const dispatch = useDispatch();
@@ -40,10 +35,13 @@ const Calendar: React.FC = () => {
     let indexGroup: number = 0;
     let maxColumn: number = 1;
     let indexColumn = 1;
-    let list = initialList.map((item, index, array) => {
+    let indexEvent = 0;
+    initialList.map((item, index, array) => {
       if (index !== 0) {
         //compara o item atual com o anterior
         if (between(item, array[index - 1])) {
+          indexEvent++;
+
           let previous: IGroups = groups[indexGroup];
           let conflicItem: boolean = true;
           //Verifica se todos os items estão conflitando
@@ -62,21 +60,31 @@ const Calendar: React.FC = () => {
           }
           const newItem = {
             columns: maxColumn,
-            items: previous.items.concat({ ...item, column: indexColumn }),
+            items: previous.items.concat({
+              ...item,
+              column: indexColumn,
+              index: indexEvent,
+            }),
           };
           groups[indexGroup] = newItem;
         } else {
+          indexEvent++;
+
           indexColumn = 1;
           indexGroup++;
           const newItem = {
             columns: 1,
-            items: [{ ...item, column: 1 }],
+            items: [{ ...item, column: 1, index: indexEvent }],
           };
           groups.push(newItem);
         }
       } else {
         //É o primeiro item, então adiciona na lista
-        const newItem = { columns: 1, items: [{ ...item, column: 1 }] };
+        indexEvent++;
+        const newItem = {
+          columns: 1,
+          items: [{ ...item, column: 1, index: indexEvent }],
+        };
         groups.push(newItem);
       }
 
@@ -105,24 +113,27 @@ const Calendar: React.FC = () => {
         </HoursStyled>
         <EventsContainerStyled>
           {listEvents.map(
-            (group: IGroups, groupIndex: number): ReactNode =>
-              group.items.map(
-                (item: IEvents, index: number): ReactNode => (
-                  <EventItemStyled
-                    key={index}
-                    top={item.start}
-                    height={item.end - item.start}
-                    columns={group.columns}
-                    column={item.column ? item.column : 1}
-                  >
-                    <h4>Veículo #{item.index}</h4>
-                    <p>
-                      "Neque porro quisquam est qui dolorem ipsum quia dolor sit
-                      amet, consectetur, adipisci velit..."
-                    </p>
-                  </EventItemStyled>
-                )
-              )
+            (group: IGroups, groupIndex: number): ReactNode => (
+              <div key={groupIndex}>
+                {group.items.map(
+                  (item: IEvents, index: number): ReactNode => (
+                    <EventItemStyled
+                      key={item.index}
+                      top={item.start}
+                      height={item.end - item.start}
+                      columns={group.columns}
+                      column={item.column ? item.column : 1}
+                    >
+                      <h4>Veículo #{item.index}</h4>
+                      <p>
+                        "Neque porro quisquam est qui dolorem ipsum quia dolor
+                        sit amet, consectetur, adipisci velit..."
+                      </p>
+                    </EventItemStyled>
+                  )
+                )}
+              </div>
+            )
           )}
         </EventsContainerStyled>
       </DFlexStyled>

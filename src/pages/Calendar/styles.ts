@@ -40,13 +40,13 @@ export const EventsContainerStyled = styled.div`
   position: relative;
 `;
 
+// crio a variavel de largura que é 100% do bloco dividido pela quantidade de colunas
 export const EventItemStyled = styled.div<{
   top: number;
   height: number;
   columns: number;
   column: number;
 }>`
-  width: calc(100% - 20px);
   background-color: #fff;
   border-left: 5px solid #b72c2a;
   border-top-right-radius: 3px;
@@ -55,10 +55,15 @@ export const EventItemStyled = styled.div<{
   top: ${(props) => (props.top ? `${props.top}px` : 0)};
   height: ${(props) => (props.height ? `${props.height}px` : "10px")};
   padding: 10px;
+  --width: ${(props) => `calc(100% / ${props.columns})`};
   width: ${(props) =>
-    props.columns ? `calc(100% / ${props.columns})` : "100%"};
+    props.columns === 1
+      ? "calc(var(--width) - 20px)"
+      : `calc(var(--width) - 10px)`};
+
+  --left: ${(props) => props.column - 1};
   left: ${(props) =>
-    props.column === 1 ? "10px" : `calc(100% / ${props.columns})`};
+    props.column === 1 ? "10px" : `calc(var(--width) * var(--left))`};
 
   h4 {
     color: #b72c2a;
